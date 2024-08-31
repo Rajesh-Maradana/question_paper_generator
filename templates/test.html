@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Paper</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 2px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .college-info {
+            margin-top: 0px;
+            font-size: 14px;
+        }
+        .college-info p {
+            margin: 5px 0;
+        }
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        .top-row div {
+            font-size: 14px;
+        }
+        .note {
+            border-top: 2px solid #000;
+            border-bottom: 2px solid #000;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .instructions {
+            margin-bottom: 20px;
+            font-size: 12px;
+        }
+        .instructions h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+        .questions {
+            margin-top: 10px;
+        }
+        .part {
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        .part h2 {
+            font-size: 18px;
+            text-align: center;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+            margin: 0 0 20px;
+        }
+        .question {
+            margin-bottom: 10px; /* Reduces space between questions */
+        }
+        .question h3 {
+            font-size: 16px;
+            margin: 0 0 5px; /* Reduces space between question heading and text */
+        }
+        .question p {
+            margin: 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ADITYA ENGINEERING COLLEGE</h1>
+            <div class="college-info">
+                <b>Surapalem, ADB Road, Rajhamundry</b><br>
+                <b id="brnach_se">{{branch}} {{semester}}</b><br>
+                <b id="course">{{subject}}</b><br>
+                <b id="date">{{date}}</b>
+            </div>
+        </div>
+
+        <div class="top-row">
+            <div>Duration: 3 Hours</div>
+            <div>Max Marks: 70</div>
+        </div>
+
+        <div class="note">
+            <b>Note:Answer any 5 from the each section.</b>
+        </div>
+
+        <div class="instructions">
+            <h2>Instructions</h2>
+            <b>1. Answer all questions.</b><br>
+            <b>2. Write your answers clearly and legibly.</b>
+        </div>
+
+        <div class="questions">
+            <div class="part">
+                <h2>Part A</h2>
+                <div class="Part_8">
+                    {% if questions_d %}
+                        {%for i in questions_d['Part_8']%}
+                            <b>{{loop.index}}. {{i}}</b><br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="part">
+                <h2>Part B</h2>
+                <div class="Part_4">
+                    {% if questions_d %}
+                    {%for i in questions_d['Part_4']%}
+                    <b>{{loop.index}}. {{i}}</b><br>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="part">
+                <h2>Part C</h2>
+                <div class="Part_2">
+                    {% if questions_d %}
+                    {%for i in questions_d['Part_2']%}
+                    <b>{{loop.index}}. {{i}}</b><br>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>End of Question Paper</p>
+        </div>
+
+    </div>
+</body>
+
+</html>

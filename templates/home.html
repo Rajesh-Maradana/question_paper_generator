@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<head>
+    <title>RAQ</title>
+    <link href='../static/index.css' rel="stylesheet">
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Latest compiled JavaScript -->
+     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src= "https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="../static/index.js"></script>
+    
+
+
+    <style type="text/css">
+        .margin {
+            margin-top: 16vh;
+            margin-left: 50px;
+        }
+
+        body {
+            background: url(../static/images/bg.JPG);
+            background-size: cover;
+        }
+
+        .card {
+            width: 350px;
+            height: 350px;
+
+        }
+
+        .custom-card {
+            margin: 0px auto;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        /* Ensure the modal is centered and has appropriate width */
+        .modal-dialog {
+            max-width: 70%;
+
+        }
+      
+        .modal-content {
+            border-radius: 10px;
+            margin-top: 130px;
+        }
+
+        .custom-margin {
+            margin-top: 5%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div>
+
+        <nav class="navbar navbar-expand-sm bg-dark">
+
+            <div class="container-fluid">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <h5> <a class="nav-link text-success" href="#">Welcome, {{session.user}}</a></h5>
+                    </li>
+                </ul>
+                <!-- Links -->
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+
+                        <h3> <a class="nav-link text-warning" href="#">Question Paper Generator</a></h3>
+                    </li>
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                    <li class="nav-item ">
+                        <h5><a class="nav-link text-danger " id="logout_f" href="#">Logout</a></h5>
+                    </li>
+                </ul>
+
+            </div>
+
+        </nav>
+    </div>
+
+    <!-- Question Cards -->
+    <div class="container-fluid">
+        <div class="row margin">
+            <!-- Create -->
+            <div class="col-md  shadow-lg p-4">
+                <div class="card  custom-card border-0" data-bs-toggle="modal" data-bs-target="#create_modal">
+                    <div class="card-header bg-white border-0">
+                        <h4 class="card-title mt-2">
+                            <center>Create your Questions</center>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <a href="" class=" stretched-link"></a> -->
+                        <img class="card-img" src="../static/images/add.png"
+                            style="height:240px; width:240px; margin-left:28px;  " alt="Card image">
+                    </div>
+                </div>
+            </div>
+            <!-- Show -->
+            <div class="col-md shadow-lg p-4">
+                <div class="card custom-card border-0" id="show_question">
+                    <div class="card-header bg-white border-0">
+                        <h4 class="card-title mt-2">
+                            <center>Show Questions</center>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <img class="card-img" src="../static/images/images.jpg"
+                            style="height:240px;width: 240px; margin-left:28px; " alt="Card image">
+                    </div>
+                </div>
+            </div>
+            <!-- Generate -->
+            <div class="col-md shadow-lg p-4">
+                <div class="card custom-card border-0" data-bs-toggle="modal" data-bs-target="#generate_modal">
+                    <div class="card-header bg-white border-0">
+                        <h4 class="card-title mt-2">
+                            <center>Generate Question Paper</center>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <img class="card-img" src="../static/images/paper.png"
+                            style="height:240px;width: 240px; margin-left:32px; " alt="Card image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--Create Modal -->
+    <div class="modal fade" id="create_modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="row custom-margin  modal-dialog">
+            <div class="modal-content shadow-lg p-4 mx-auto bg-white">
+                <h5 class="mx-auto">Create Your Question</h5>
+                <div class="alert alert-success" id="successrAlert" role="alert" style="display:none;"></div>
+                <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+                <div class="card-body">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="single-question-tab" data-bs-toggle="tab"
+                                href="#single-question" role="tab" aria-controls="single-question"
+                                aria-selected="true">Add Single Question</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="file-upload-tab" data-bs-toggle="tab" href="#file-upload" role="tab"
+                                aria-controls="file-upload" aria-selected="false">Upload CSV/Excel File</a>
+                        </li>
+                    </ul>
+
+                    <!-- Tab content -->
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Single Question Tab -->
+                        <div class="tab-pane fade show active" id="single-question" role="tabpanel"
+                            aria-labelledby="single-question-tab">
+                            <form class="form" id="create_question">
+                                <div class="row mb-2">
+                                    <div class="col-md-6">
+                                        <label for="sub">Subject</label>
+                                        <input type="text" class="form-control" id="sub" placeholder="Subject"
+                                            name="subject">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="sem">Semester</label>
+                                        <input type="text" class="form-control" id="sem" placeholder="Semester"
+                                            name="semester">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-4">
+                                        <label class="mt-2" for="sel">Branch</label>
+                                        <select class="form-control" id="sel" name="branch">
+                                            <option>--Select Branch--</option>
+                                            <option>Computer Science</option>
+                                            <option>Electrical and Electronics</option>
+                                            <option>Information Technology</option>
+                                            <option>Civil</option>
+                                            <option>Electronics and Communication</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="mt-2" for="mar">Marks</label>
+                                        <input type="text" class="form-control" id="mar" placeholder="Marks"
+                                            name="marks">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="mt-2" for="stat">Difficulty</label>
+                                        <input type="text" class="form-control" id="stat" placeholder="Difficulty"
+                                            name="difficulty">
+                                    </div>
+                                </div>
+                                <label for="qn">Question</label>
+                                <textarea class="form-control" id="qn" placeholder="Enter Your Question"
+                                    name="question"></textarea>
+                                <button type="submit" class="btn btn-outline-dark mt-3 btn-block">Submit
+                                    Question</button>
+                            </form>
+                        </div>
+
+                        <!-- File Upload Tab -->
+                        <div class="tab-pane fade" id="file-upload" role="tabpanel" aria-labelledby="file-upload-tab">
+                            <form class="form" id="upload_file" enctype="multipart/form-data">
+                                <label for="fileInput">Upload CSV/Excel File</label>
+                                <input type="file" class="form-control" id="fileInput" name="file"
+                                    accept=".csv, .xlsx, .xls">
+                                <button type="submit" class="btn btn-outline-dark mt-3 btn-block">Upload File</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Show Modal -->
+    <div class="modal fade" id="show_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="row custom-margin  modal-dialog">
+            <div class="modal-content shadow-lg p-4 mx-auto bg-white">
+                <h4 class="mx-auto">Questions</h4>
+                <table class="table table-striped table-dark" id="show_q">
+                    <thead>
+                        <th>Id</th>
+                        <th>Question</th>
+                        <th>Subject</th>
+                        <th>Branch</th>
+                        <th>Semester</th>
+                        <th>Difficulty</th>
+                        <th>Marks</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Generate Modal -->
+    <div class="modal fade" id="generate_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="row custom-margin  modal-dialog">
+            <div class="modal-content shadow-lg p-4 mx-auto bg-white">
+                <h4 class="mx-auto">Generate Paper</h4>
+                <div class="alert alert-success" id="successrAlertg" role="alert" style="display:none;"></div>
+                <form class="form" id="generate_paper">
+                    <div class="row mb-2">
+                        <div class="col-md-4">
+                            <label for="sub">Subject</label>
+                            <input type="text" class="form-control" id="sub" placeholder="Subject" name="subject">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="sem">Semester</label>
+                            <input type="text" class="form-control" id="sem" placeholder="Semester" name="semester">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="mt-2" for="sel">Branch</label>
+                            <select class="form-control" id="sel" name="branch">
+                                <option>--Select Branch--</option>
+                                <option>Computer Science</option>
+                                <option>Electrical and Electronics</option>
+                                <option>Information Technology</option>
+                                <option>Civil</option>
+                                <option>Electronics and Communication</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-dark mt-3 btn-block">Generate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
